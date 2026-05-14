@@ -1,0 +1,62 @@
+import java.util.Scanner;
+
+// Superclass
+class Person {
+    String name;
+    int age;
+
+    void getPersonData() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter name: ");
+        name = sc.nextLine();
+
+        System.out.print("Enter age: ");
+        age = sc.nextInt();
+    }
+
+    void displayPersonData() {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+    }
+}
+
+// Subclass
+class Student extends Person {
+    int rollNo;
+
+    void getStudentData() {
+        Scanner sc = new Scanner(System.in);
+
+        // Calling superclass method
+        getPersonData();
+
+        System.out.print("Enter Roll Number: ");
+        rollNo = sc.nextInt();
+    }
+
+    void displayStudentData() {
+
+        // Calling superclass method
+        displayPersonData();
+
+        System.out.println("Roll Number: " + rollNo);
+    }
+}
+
+// Main class
+public class SingleInheritanceDemo {
+
+    public static void main(String[] args) {
+
+        Student s = new Student();
+
+        // Taking input
+        s.getStudentData();
+
+        System.out.println("\n--- Student Details ---");
+
+        // Displaying data
+        s.displayStudentData();
+    }
+}
