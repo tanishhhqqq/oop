@@ -1,0 +1,123 @@
+import java.util.Scanner;
+class Account {
+    String accNo;
+    int pin;
+    double balance;
+
+    Account(String accNo, int pin, double balance) {
+        this.accNo = accNo;
+        this.pin = pin;
+        this.balance = balance;
+    }
+}
+
+public class ATMSystemnew {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Account[] accounts = {
+            new Account("101", 1234, 1000),
+            new Account("102", 5678, 2000)
+        };
+
+        Account currentUser = null;
+
+        System.out.print("Enter Account Number: ");
+        String accNo = sc.next();
+
+        for (Account acc : accounts) {
+            if (acc.accNo.equals(accNo)) {
+                currentUser = acc;
+                break;
+            }
+        }
+
+        if (currentUser == null) {
+            System.out.println("Account not found!");
+            return;
+        }
+
+        while (true) {
+            System.out.print("Enter PIN (or 0 to exit): ");
+            int pin = sc.nextInt();
+
+            if (pin == 0) {
+                System.out.println("Exiting...");
+                return;
+            }
+
+            if (pin == currentUser.pin) {
+                System.out.println("Login Successful!");
+                break;
+            } else {
+                System.out.println("Incorrect PIN. Try again.");
+            }
+        }
+
+        int choice;
+        do {
+            System.out.println("\n===== ATM MENU =====");
+            System.out.println("1. Check Balance");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Exit");
+            System.out.print("Enter choice: ");
+
+            choice = sc.nextInt();
+
+            try {
+                switch (choice) {
+                    case 1:
+                        System.out.println("Balance: ₹" + currentUser.balance);
+                        break;
+
+                    case 2:
+                        System.out.print("Enter amount to deposit: ");
+                        double deposit = sc.nextDouble();
+
+                        if (deposit <= 0) {
+                            throw new IllegalArgumentException("Invalid amount!");
+                        }
+
+                        currentUser.balance += deposit;
+                        System.out.println("Amount Deposited!");
+                        break;
+
+                    case 3:
+                        System.out.print("Enter amount to withdraw: ");
+                        double withdraw = sc.nextDouble();
+
+                        if (withdraw <= 0) {
+                            throw new IllegalArgumentException("Invalid amount!");
+                        }
+
+                        if (withdraw > currentUser.balance) {
+                            throw new ArithmeticException("Insufficient funds!");
+                        }
+
+                        currentUser.balance -= withdraw;
+                        System.out.println("Amount Withdrawn!");
+                        break;
+
+                    case 4:
+                        System.out.println("Thank you for using ATM!");
+                        break;
+
+                    default:
+                        System.out.println("Invalid choice!");
+                }
+
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            } catch (ArithmeticException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Invalid input!");
+                sc.next();
+            }
+
+        } while (choice != 4);
+
+        sc.close();
+    }
+}
