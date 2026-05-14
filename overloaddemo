@@ -1,0 +1,56 @@
+// OverloadDemo.java
+import java.util.Scanner;
+
+class OverloadDemo {
+
+    static int power(int a, int b) {
+        return (int) Math.pow(a, b);
+    }
+
+    static double power(double a, double b) {
+        return Math.pow(a, b);
+    }
+
+    static int absolute(int a) {
+        return Math.abs(a);
+    }
+
+    static double absolute(double a) {
+        return Math.abs(a);
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Choose operation:");
+        System.out.println("1. Power");
+        System.out.println("2. Absolute");
+
+        int choice = sc.nextInt();
+
+        if (choice == 1) {
+
+            System.out.print("Enter base: ");
+            double base = sc.nextDouble();
+
+            System.out.print("Enter exponent: ");
+            double exp = sc.nextDouble();
+
+            System.out.println("Power = " + power(base, exp));
+
+        } else if (choice == 2) {
+
+            System.out.print("Enter number: ");
+            double num = sc.nextDouble();
+
+            System.out.println("Absolute = " + absolute(num));
+
+        } else {
+
+            System.out.println("Invalid choice!");
+        }
+
+        sc.close();
+    }
+}
